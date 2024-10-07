@@ -1,7 +1,7 @@
 package="hx-lua-simdjson"
 version="0.0.5-1"
 source = {
-   url = "git://github.com/jdonaldson/hx-lua-simdjson",
+   url = "git://github.com/HaxeFoundation/hx-lua-simdjson",
    tag = "0.0.5"
 }
 description = {
@@ -9,7 +9,7 @@ description = {
    detailed = [[
       This is a Haxe-specific c++ binding to simdjson for parsing JSON very quickly.
    ]],
-   homepage = "https://github.com/jdonaldson/hx-lua-simdjson",
+   homepage = "https://github.com/HaxeFoundation/hx-lua-simdjson",
    license = "Apache-2.0"
 }
 dependencies = {
