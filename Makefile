@@ -1,4 +1,4 @@
-OBJ = src/luasimdjson.o src/simdjson.o
+OBJ = src/hxluasimdjson.o src/simdjson.o
 CPPFLAGS = -I$(LUA_INCDIR)
 CXXFLAGS = -std=c++11 -Wall $(CFLAGS)
 LDFLAGS = $(LIBFLAG)
@@ -21,7 +21,7 @@ else
 	endif
 endif
 
-TARGET = simdjson.$(LIBEXT)
+TARGET = hxsimdjson.$(LIBEXT)
 
 all: $(TARGET)
 

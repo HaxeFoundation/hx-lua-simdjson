@@ -7,14 +7,14 @@ extern "C" {
 	static int ParsedObject_open_file(lua_State*);
 
 
-	static const struct luaL_Reg luasimdjson[] = {
+	static const struct luaL_Reg hxluasimdjson[] = {
 		{"parse", parse},
 		{"parseFile", parse_file},
 		{"activeImplementation", active_implementation},
 		{"open", ParsedObject_open},
 		{"openFile", ParsedObject_open_file},
-			
+
 		{NULL, NULL},
 	};
-	int luaopen_simdjson (lua_State*);
+	int luaopen_hxsimdjson (lua_State*);
 }

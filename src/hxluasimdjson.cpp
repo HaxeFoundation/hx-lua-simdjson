@@ -12,9 +12,9 @@
 #define __OPTIMIZE__ 1
 
 #include "simdjson.h"
-#include "luasimdjson.h"
+#include "hxluasimdjson.h"
 
-#define LUA_SIMDJSON_NAME       "simdjson"
+#define LUA_SIMDJSON_NAME       "hxsimdjson"
 #define LUA_SIMDJSON_VERSION    "0.0.5"
 
 using namespace simdjson;
@@ -50,26 +50,41 @@ void convert_ondemand_element_to_table(lua_State *L, T& element) {
 
     case ondemand::json_type::array:
       {
-          int count = 1;
+          int count = 0;
           lua_newtable(L);
+          lua_getglobal(L, "_hx_array_mt");
+          lua_setmetatable(L, -2);
 
             for (ondemand::value child : element.get_array()) {
               lua_pushinteger(L, count);
               convert_ondemand_element_to_table(L, child);
-              lua_settable(L, -3);
+              lua_rawset(L, -3);
               count = count + 1;
             }
+            lua_pushstring(L, "length");
+            lua_pushnumber(L, count);
+            lua_rawset(L, -3);
             break;
       }
 
     case ondemand::json_type::object:
       lua_newtable(L);
+      /* set values */
       for (ondemand::field field : element.get_object()) {
         std::string_view s = field.unescaped_key();
         lua_pushlstring(L, s.data(), s.size());
         convert_ondemand_element_to_table(L, field.value());
         lua_settable(L, -3);
       }
+      lua_newtable(L);
+      /* set field existence */
+      for (dom::key_value_pair field : dom::object(element)) {
+        std::string_view view(field.key);
+        lua_pushlstring(L, view.data(), view.size());
+        lua_pushboolean(L, true);
+        lua_settable(L, -3);
+      }
+      lua_setfield(L, -2, "__fields__");
       break;
 
     case ondemand::json_type::number:
@@ -123,7 +138,7 @@ void convert_ondemand_element_to_table(lua_State *L, T& element) {
     case ondemand::json_type::null:
       // calling is_null().value() will trigger an exception if the value is invalid
       if (element.is_null().value()) {
-        lua_pushlightuserdata(L, NULL);
+        lua_pushnil(L);
       } else {
         // workaround for simdjson 3.10.1
         throw simdjson_error(INCORRECT_TYPE);
@@ -305,7 +320,7 @@ static const struct luaL_Reg arraylib_m [] = {
     {NULL, NULL}
 };
 
-int luaopen_simdjson (lua_State *L) {
+int luaopen_hxsimdjson (lua_State *L) {
     luaL_newmetatable(L, LUA_MYOBJECT);
      lua_pushvalue(L, -1); /* duplicates the metatable */
     lua_setfield(L, -2, "__index");
@@ -314,7 +329,7 @@ int luaopen_simdjson (lua_State *L) {
     // luaL_newlib(L, luasimdjson);
 
     lua_newtable(L);
-    luaL_setfuncs (L, luasimdjson, 0);
+    luaL_setfuncs (L, hxluasimdjson, 0);
 
     lua_pushlightuserdata(L, NULL);
     lua_setfield(L, -2, "null");
