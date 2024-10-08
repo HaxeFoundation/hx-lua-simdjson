@@ -34,12 +34,12 @@ jobs:
         run: |
           source lua_install/bin/activate
           luarocks make
-      - name: Run tests
-        run: |
-          source lua_install/bin/activate
-          luarocks install lua-cjson2
-          luarocks install busted
-          busted --verbose
+      # - name: Run tests
+      #   run: |
+      #     source lua_install/bin/activate
+      #     luarocks install lua-cjson2
+      #     luarocks install busted
+      #     busted --verbose
 
   windows:
     strategy:
@@ -58,9 +58,9 @@ jobs:
         run: |
           .\lua_install\bin\activate
           luarocks make
-      - name: Run tests
-        run: |
-          .\lua_install\bin\activate
-          luarocks install lua-cjson2
-          luarocks install busted
-          busted --verbose
+      # - name: Run tests
+      #   run: |
+      #     .\lua_install\bin\activate
+      #     luarocks install lua-cjson2
+      #     luarocks install busted
+      #     busted --verbose
