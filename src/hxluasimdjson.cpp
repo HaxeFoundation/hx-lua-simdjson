@@ -69,18 +69,15 @@ void convert_ondemand_element_to_table(lua_State *L, T& element) {
 
     case ondemand::json_type::object:
       lua_newtable(L);
-      /* set values */
+      lua_newtable(L);
       for (ondemand::field field : element.get_object()) {
         std::string_view s = field.unescaped_key();
+        /* set value */
         lua_pushlstring(L, s.data(), s.size());
         convert_ondemand_element_to_table(L, field.value());
-        lua_settable(L, -3);
-      }
-      lua_newtable(L);
-      /* set field existence */
-      for (dom::key_value_pair field : dom::object(element)) {
-        std::string_view view(field.key);
-        lua_pushlstring(L, view.data(), view.size());
+        lua_settable(L, -4);
+        /* set field existence */
+        lua_pushlstring(L, s.data(), s.size());
         lua_pushboolean(L, true);
         lua_settable(L, -3);
       }
