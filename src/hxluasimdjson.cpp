@@ -328,7 +328,7 @@ int luaopen_hxsimdjson (lua_State *L) {
     lua_newtable(L);
     luaL_setfuncs (L, hxluasimdjson, 0);
 
-    lua_pushlightuserdata(L, NULL);
+    lua_pushnil(L);
     lua_setfield(L, -2, "null");
 
     lua_pushliteral(L, LUA_SIMDJSON_NAME);
