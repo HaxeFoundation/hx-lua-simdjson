@@ -1,4 +1,6 @@
-# hx-lua-simdjson (WIP)
+# hx-lua-simdjson
+
+[![Build Status](https://github.com/FourierTransformer/lua-simdjson/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/FourierTransformer/lua-simdjson/actions?query=branch%3Amaster)
 
 A basic haxe-specific lua binding to [simdjson](https://simdjson.org). This
 library is intended to be used only via the Haxe compiler.

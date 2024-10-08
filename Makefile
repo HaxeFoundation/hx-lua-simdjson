@@ -1,16 +1,41 @@
-SRC = src/hxluasimdjson.cpp src/simdjson.cpp
-INCLUDE = -I$(LUA_INCDIR)
-LIBS_PATH = -L$(LUA_LIBDIR)
-LIBS = -lpthread
-FLAGS = -std=c++11 -Wall $(LIBFLAG) $(CFLAGS)
+OBJ = src/hxluasimdjson.o src/simdjson.o
+CPPFLAGS = -I$(LUA_INCDIR)
+CXXFLAGS = -std=c++11 -Wall $(CFLAGS)
+LDFLAGS = $(LIBFLAG)
+LDLIBS = -lpthread
 
-all: hxsimdjson.so
+ifdef LUA_LIBDIR
+LDLIBS += $(LUA_LIBDIR)/$(LUALIB)
+endif
 
-hxsimdjson.so:
-	$(CXX) $(SRC) $(FLAGS) $(INCLUDE) $(LIBS_PATH) $(LIBS) -o $@
+ifeq ($(OS),Windows_NT)
+	LIBEXT = dll
+else
+	UNAME := $(shell uname -s)
+	ifeq ($(findstring MINGW,$(UNAME)),MINGW)
+		LIBEXT = dll
+	else ifeq ($(findstring CYGWIN,$(UNAME)),CYGWIN)
+		LIBEXT = dll
+	else
+		LIBEXT = so
+	endif
+endif
+
+TARGET = hxsimdjson.$(LIBEXT)
+
+all: $(TARGET)
+
+DEP_FILES = $(OBJ:.o=.d)
+-include $(DEP_FILES)
+
+%.o: %.cpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -MMD -MP -c $< -o $@
+
+$(TARGET): $(OBJ)
+	$(CXX) $(LDFLAGS) $^ -o $@ $(LDLIBS)
 
 clean:
-	rm *.so
+	rm -f *.$(LIBEXT) src/*.{o,d}
 
-install: hxsimdjson.so
-	cp hxsimdjson.so $(INST_LIBDIR)
+install: $(TARGET)
+	cp $(TARGET) $(INST_LIBDIR)
