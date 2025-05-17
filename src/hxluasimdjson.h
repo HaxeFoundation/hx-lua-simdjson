@@ -1,11 +1,17 @@
 #include <lua.hpp>
+
+#ifdef _MSC_VER
+#define LUASIMDJSON_EXPORT __declspec(dllexport)
+#else
+#define LUASIMDJSON_EXPORT extern
+#endif
+
 extern "C" {
 	static int parse(lua_State*);
 	static int parse_file(lua_State*);
 	static int active_implementation(lua_State*);
 	static int ParsedObject_open(lua_State*);
 	static int ParsedObject_open_file(lua_State*);
-
 
 	static const struct luaL_Reg hxluasimdjson[] = {
 		{"parse", parse},
@@ -16,5 +22,5 @@ extern "C" {
 
 		{NULL, NULL},
 	};
-	int luaopen_hxsimdjson (lua_State*);
+	LUASIMDJSON_EXPORT int luaopen_hxsimdjson(lua_State*);
 }

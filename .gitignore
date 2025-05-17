@@ -4,3 +4,8 @@ test/
 *.o
 *.d
 *.src.rock
+
+# msvc
+*.obj
+*.lib
+*.exp

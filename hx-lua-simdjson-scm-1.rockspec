@@ -1,8 +1,7 @@
 package="hx-lua-simdjson"
-version="0.0.5-1"
+version="scm-1"
 source = {
-   url = "git://github.com/HaxeFoundation/hx-lua-simdjson",
-   tag = "0.0.5"
+   url = "git://github.com/HaxeFoudnation/hx-lua-simdjson",
 }
 description = {
    summary = "This is a simple Haxe-specific Lua binding for simdjson",
@@ -36,6 +35,7 @@ build = {
          build_variables = {
             LUA_LIBDIR="$(LUA_LIBDIR)",
             LUALIB="$(LUALIB)",
+            LD="$(LD)",
          }
       }
    }
