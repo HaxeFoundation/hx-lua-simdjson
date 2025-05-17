@@ -1,4 +1,4 @@
-OBJ = src/luasimdjson.obj src/simdjson.obj
+OBJ = src/hxluasimdjson.obj src/simdjson.obj
 CPPFLAGS = -I$(LUA_INCDIR)
 CXXFLAGS = -EHsc -std:c++17 $(CFLAGS)
 LDFLAGS = $(LIBFLAG)
@@ -7,11 +7,11 @@ LDFLAGS = $(LIBFLAG)
 LDLIBS = $(LUA_LIBDIR)/$(LUALIB)
 !endif
 
-TARGET = simdjson.dll
+TARGET = hxsimdjson.dll
 
 all: $(TARGET)
 
-src/luasimdjson.obj: src/luasimdjson.h src/simdjson.h
+src/hxluasimdjson.obj: src/hxluasimdjson.h src/simdjson.h
 src/simdjson.obj: src/simdjson.h
 
 .cpp.obj::
