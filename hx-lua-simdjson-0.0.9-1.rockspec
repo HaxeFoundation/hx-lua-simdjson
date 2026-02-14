@@ -1,8 +1,8 @@
 package="hx-lua-simdjson"
-version="0.0.7-1"
+version="0.0.9-1"
 source = {
    url = "git://github.com/HaxeFoundation/hx-lua-simdjson",
-   tag = "0.0.7"
+   tag = "0.0.9"
 }
 description = {
    summary = "This is a simple Haxe-specific Lua binding for simdjson",
@@ -13,7 +13,7 @@ description = {
    license = "Apache-2.0"
 }
 dependencies = {
-   "lua >= 5.1, < 5.5"
+   "lua >= 5.1, < 5.6"
 }
 build = {
    type = "make",
