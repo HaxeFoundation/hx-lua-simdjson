@@ -1,6 +1,6 @@
 OBJ = src/hxluasimdjson.o src/simdjson.o
 CPPFLAGS = -I$(LUA_INCDIR)
-CXXFLAGS = -std=c++11 -Wall $(CFLAGS)
+CXXFLAGS = -std=c++11 -Wall -fvisibility=hidden $(CFLAGS)
 LDFLAGS = $(LIBFLAG)
 LDLIBS = -lpthread
 
