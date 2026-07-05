@@ -10,6 +10,34 @@ library is intended to be used only via the Haxe compiler.
  * a lua build environment with support for C++11
    * g++ version 7+ and clang++ version 6+ or newer should work!
 
+## Usage from Haxe
+
+This project ships both halves of the integration:
+
+1. The **native Lua module** (`hxsimdjson`), built and installed via luarocks
+   from the rockspec in this repo:
+
+   ```
+   luarocks make hx-lua-simdjson-scm-1.rockspec
+   ```
+
+2. A **haxelib** that wires `haxe.Json` on the Lua target to that native module.
+
+   ```
+   haxelib install hx-lua-simdjson
+   haxe -lua out.lua -lib hx-lua-simdjson ...
+   ```
+
+   Adding `-lib hx-lua-simdjson` transparently routes `haxe.Json.parse`
+   (and `haxe.format.JsonParser.parse`) through simdjson. It does this with a
+   build macro that rewrites `haxe.format.JsonParser.parse` at compile time
+   (see `src/hxluasimdjson/Macro.hx`) — no std files are shadowed, so it does
+   not need to be re-synced when the Haxe std changes across versions. On any
+   non-Lua target the library is a no-op.
+
+   The macro only affects parsing; `haxe.Json.stringify` continues to use the
+   std printer.
+
 
 ## Licenses
  * The jsonexamples, src/simdjson.cpp, src/simdjson.h are unmodified from the released version simdjson under the Apache License 2.0.
