@@ -1,6 +1,6 @@
 {
 	"name": "hx-lua-simdjson",
-	"license": "Apache-2.0",
+	"license": "Apache",
 	"tags": ["lua", "json", "simdjson", "native", "parser"],
 	"description": "Fast simdjson-backed JSON parsing for the Haxe Lua target. Adding this library transparently routes haxe.Json.parse through the native hxsimdjson luarock via a build macro.",
 	"version": "0.0.9",
